@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu perspectiva importa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+    
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    
+    .accent-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #7c3aed 0%, #fbbf24 100%);
+      margin-bottom: 1.5rem;
+    }
+    
+    .header {
+      margin-bottom: 3.5rem;
+    }
+    
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    
+    .header p {
+      font-size: 16px;
+      color: #666666;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      max-width: 500px;
+    }
+    
+    .countdown {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #ffffff;
+      border: 2px solid #7c3aed;
+      color: #7c3aed;
+      padding: 0.875rem 1.5rem;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+    }
+    
+    .countdown:hover {
+      background: #f5f3ff;
+    }
+    
+    .countdown::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #fbbf24;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    
+    .countdown.expired {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+    
+    .countdown.expired::before {
+      background: #ef4444;
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #7c3aed 10%, #7c3aed 90%, transparent);
+      margin: 3rem 0;
+    }
+    
+    .form-section {
+      margin-top: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 2.5rem;
+      animation: fadeIn 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.15s; }
+    .form-group:nth-child(3) { animation-delay: 0.2s; }
+    .form-group:nth-child(4) { animation-delay: 0.25s; }
+    .form-group:nth-child(5) { animation-delay: 0.3s; }
+    .form-group:nth-child(6) { animation-delay: 0.35s; }
+    .form-group:nth-child(7) { animation-delay: 0.4s; }
+    
+    .form-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 0.875rem;
+      position: relative;
+      padding-left: 0;
+    }
+    
+    .form-group.optional label::after {
+      content: "opcional";
+      font-weight: 400;
+      color: #999999;
+      font-size: 12px;
+      margin-left: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e8e8e8;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      color: #1a1a1a;
+      background: #ffffff;
+      transition: all 0.3s ease;
+    }
+    
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    textarea::placeholder {
+      color: #cccccc;
+    }
+    
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.08);
+      background: #fafaf8;
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      font-family: inherit;
+    }
+    
+    .scale-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .scale-label .scale-range {
+      font-size: 12px;
+      color: #999999;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    
+    .scale-group {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 0.6rem;
+    }
+    
+    .scale-btn {
+      aspect-ratio: 1;
+      border: 2px solid #e8e8e8;
+      background: #ffffff;
+      color: #999999;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .scale-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fbbf24;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: -1;
+    }
+    
+    .scale-btn:hover {
+      border-color: #fbbf24;
+      color: #666666;
+    }
+    
+    .scale-btn.selected {
+      background: #7c3aed;
+      border-color: #7c3aed;
+      color: #ffffff;
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 1.125rem;
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 2.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.3px;
+    }
+    
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: left 0.3s ease;
+    }
+    
+    .submit-btn:hover:not(:disabled)::before {
+      left: 100%;
+    }
+    
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    }
+    
+    .submit-btn:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+    }
+    
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #f0fdf4;
+      border-radius: 12px;
+      border-left: 4px solid #fbbf24;
+      margin-top: 2rem;
+      animation: slideIn 0.4s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .success-message.show {
+      display: block;
+    }
+    
+    .success-message h2 {
+      font-family: 'Playfair Display', serif;
+      color: #15803d;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .success-message p {
+      color: #166534;
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    
+    .accent {
+      color: #fbbf24;
+      font-weight: 500;
+    }
+    
+    @media (max-width: 640px) {
+      .container {
+        padding: 2.5rem 1.5rem;
+      }
+      
+      .header h1 {
+        font-size: 32px;
+      }
+      
+      .header p {
+        font-size: 15px;
+      }
+      
+      .scale-group {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+      }
+      
+      .scale-btn {
+        font-size: 12px;
+      }
+      
+      .divider {
+        margin: 2.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="accent-line"></div>
+      <h1>Tu perspectiva importa</h1>
+      <p>Me encuentro en un momento de redescubrimiento profesional y tu opinión me ayuda enormemente.</p>
+      <div class="countdown" id="countdown">
+        <span id="countdown-text">Tienes 48 horas para responder</span>
+      </div>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <form id="feedbackForm" class="form-section">
+      <div class="form-group optional">
+        <label for="nombre">¿Cuál es tu nombre?</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
+      </div>
+      
+      <div class="form-group optional">
+        <label for="email">¿Cuál es tu email?</label>
+        <input type="email" id="email" name="email" placeholder="tu@email.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="conocimos">¿Cómo nos conocimos?</label>
+        <textarea id="conocimos" name="conocimos" placeholder="Cuéntame cómo nos conocimos..." required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="talentos">¿Cuáles son mis talentos o cualidades principales?</label>
+        <textarea id="talentos" name="talentos" placeholder="Qué talentos o cualidades ves en mí..." required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="impacto">¿Qué impacto he tenido en ti?</label>
+        <textarea id="impacto" name="impacto" placeholder="Cómo he impactado tu vida o trabajo..." required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>¿Me recomendarías profesionalmente?</label>
+        <div class="scale-label">
+          <span></span>
+          <div class="scale-range">1 (poco) — 10 (mucho)</div>
+        </div>
+        <div class="scale-group" id="scaleGroup">
+          <button type="button" class="scale-btn" data-value="1">1</button>
+          <button type="button" class="scale-btn" data-value="2">2</button>
+          <button type="button" class="scale-btn" data-value="3">3</button>
+          <button type="button" class="scale-btn" data-value="4">4</button>
+          <button type="button" class="scale-btn" data-value="5">5</button>
+          <button type="button" class="scale-btn" data-value="6">6</button>
+          <button type="button" class="scale-btn" data-value="7">7</button>
+          <button type="button" class="scale-btn" data-value="8">8</button>
+          <button type="button" class="scale-btn" data-value="9">9</button>
+          <button type="button" class="scale-btn" data-value="10">10</button>
+        </div>
+        <input type="hidden" id="recomendacion" name="recomendacion" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="masInfo">¿Hay algo más que quieras que sepa?</label>
+        <textarea id="masInfo" name="masInfo" placeholder="Algo adicional que quieras compartir..."></textarea>
+      </div>
+      
+      <button type="submit" class="submit-btn" id="submitBtn">Enviar mi perspectiva</button>
+    </form>
+    
+    <div class="success-message" id="successMessage">
+      <h2>He recibido tu respuesta</h2>
+      <p>Significa mucho para mí. Me ayuda enormemente en todo lo que estoy construyendo para mi futuro.<br><br><span class="accent">Gracias por tu confianza.</span></p>
+    </div>
+  </div>
+  
+  <script>
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzcM19NeUeuX2S7N3Nhw0o6NAevE22DI0RL1QxpHYTE-yeNeNStZKQieVh33iC6KI9/exec';
+    
+    function updateCountdown() {
+      const deadline = localStorage.getItem('feedbackDeadline');
+      const now = new Date().getTime();
+      
+      if (!deadline) {
+        const newDeadline = now + (48 * 60 * 60 * 1000);
+        localStorage.setItem('feedbackDeadline', newDeadline);
+      }
+      
+      const finalDeadline = parseInt(localStorage.getItem('feedbackDeadline'));
+      const remaining = finalDeadline - now;
+      
+      if (remaining <= 0) {
+        document.getElementById('countdown-text').textContent = 'Tiempo agotado';
+        document.getElementById('countdown').classList.add('expired');
+        document.getElementById('submitBtn').disabled = true;
+        return;
+      }
+      
+      const hours = Math.floor(remaining / (1000 * 60 * 60));
+      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      
+      document.getElementById('countdown-text').textContent = `Tienes ${hours}h ${minutes}m para responder`;
+    }
+    
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+    
+    const scaleButtons = document.querySelectorAll('.scale-btn');
+    const recomendacionInput = document.getElementById('recomendacion');
+    
+    scaleButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        scaleButtons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        recomendacionInput.value = btn.dataset.value;
+      });
+    });
+    
+    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(document.getElementById('feedbackForm'));
+      const params = new URLSearchParams();
+      
+      params.append('nombre', formData.get('nombre'));
+      params.append('email', formData.get('email'));
+      params.append('conocimos', formData.get('conocimos'));
+      params.append('talentos', formData.get('talentos'));
+      params.append('impacto', formData.get('impacto'));
+      params.append('recomendacion', formData.get('recomendacion'));
+      params.append('masInfo', formData.get('masInfo'));
+      
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = 'Enviando...';
+      
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: params
+        });
+        
+        if (response.ok) {
+          document.getElementById('feedbackForm').style.display = 'none';
+          document.getElementById('successMessage').classList.add('show');
+        } else {
+          throw new Error('Error al enviar');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un problema al enviar tu respuesta. Por favor, intenta de nuevo.');
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').textContent = 'Enviar mi perspectiva';
+      }
+    });
+  </script>
+</body>
+</html>
