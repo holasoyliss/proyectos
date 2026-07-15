@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>24 Artículos LinkedIn — Liss</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: Tahoma, Geneva, sans-serif; background: #ffffff; color: #1a1a1a; padding-bottom: 80px; }
+
+.header {
+  background: linear-gradient(135deg, #f8f0f4 0%, #ffffff 60%);
+  border-bottom: 2px solid #C2185B;
+  padding: 32px 20px 24px;
+}
+.header-label { font-size: 10px; letter-spacing: 4px; color: #C2185B; text-transform: uppercase; margin-bottom: 8px; }
+.header h1 { font-size: 22px; font-weight: 700; line-height: 1.3; color: #1a1a1a; }
+.header h1 em { color: #C2185B; font-style: normal; }
+.header-sub { font-size: 12px; color: #666; margin-top: 10px; line-height: 1.6; }
+
+.sheets-banner {
+  margin: 14px 16px 0; padding: 12px 14px; border-radius: 10px;
+  background: #e8f5e9; border: 1px solid #a5d6a7;
+  font-size: 11px; color: #2e7d32; line-height: 1.6;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.sheets-banner-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.sheets-url-row { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+.sheets-url-input {
+  flex: 1; padding: 7px 10px; border-radius: 6px; border: 1px solid #a5d6a7;
+  font-size: 11px; font-family: Tahoma, sans-serif; background: #fff; color: #1a1a1a;
+}
+.sheets-url-input:focus { outline: none; border-color: #2e7d32; }
+.sheets-save-btn {
+  padding: 7px 12px; border-radius: 6px; border: none;
+  background: #2e7d32; color: #fff; font-size: 11px;
+  font-family: Tahoma, sans-serif; cursor: pointer; white-space: nowrap; font-weight: 700;
+}
+
+.progress-section { padding: 20px 16px 0; }
+.progress-label { font-size: 9px; letter-spacing: 3px; color: #999; text-transform: uppercase; margin-bottom: 12px; }
+.progress-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.prog-block { padding: 10px 12px; border-radius: 8px; background: #f5f5f5; border: 1px solid #e0e0e0; }
+.prog-block-name { font-size: 10px; font-weight: 700; letter-spacing: 0.4px; margin-bottom: 4px; }
+.prog-block-bar { height: 3px; background: #e0e0e0; border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+.prog-block-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.prog-block-count { font-size: 9px; color: #999; }
+.total-bar-row { display: flex; align-items: center; gap: 10px; }
+.total-bar { flex: 1; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; }
+.total-fill { height: 100%; background: linear-gradient(90deg, #C2185B, #E91E63); border-radius: 3px; transition: width 0.4s ease; }
+.total-label { font-size: 12px; color: #C2185B; font-weight: 700; white-space: nowrap; }
+
+.filter-row { display: flex; gap: 6px; padding: 16px 16px 8px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 5px 12px; border-radius: 20px; font-size: 10px; letter-spacing: 0.5px;
+  border: 1px solid #ddd; background: #f5f5f5; color: #999;
+  cursor: pointer; transition: all 0.2s; font-family: Tahoma, sans-serif;
+}
+
+.article-card { margin: 10px 16px 0; border-radius: 12px; overflow: hidden; border: 1px solid #e0e0e0; }
+.card-header {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; cursor: pointer; background: #fafafa; transition: background 0.2s;
+}
+.card-num {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.card-meta { flex: 1; }
+.card-bloque { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 3px; }
+.card-title { font-size: 13px; color: #1a1a1a; line-height: 1.4; font-weight: 600; }
+.card-status { font-size: 9px; margin-top: 5px; display: flex; align-items: center; gap: 6px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.chevron { font-size: 11px; color: #999; transition: transform 0.2s; margin-top: 2px; flex-shrink: 0; }
+.chevron.open { transform: rotate(180deg); }
+
+.card-body { display: none; background: #f9f9f9; border-top: 1px solid #e0e0e0; padding: 16px; }
+.card-body.visible { display: block; }
+.sec-label {
+  font-size: 9px; letter-spacing: 2px; color: #C2185B;
+  text-transform: uppercase; margin-bottom: 8px; margin-top: 16px; font-weight: 700;
+}
+.sec-label:first-child { margin-top: 0; }
+.intro-box { border-left: 3px solid currentColor; padding: 10px 12px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.6; }
+.struct-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e8e8e8; }
+.struct-item:last-child { border-bottom: none; }
+.struct-num { font-size: 10px; min-width: 18px; padding-top: 2px; font-weight: 700; }
+.struct-text { font-size: 12px; color: #555; line-height: 1.5; }
+.struct-text strong { color: #1a1a1a; display: block; margin-bottom: 2px; }
+.data-box { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #555; line-height: 1.6; }
+.cta-box { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #1a1a1a; font-style: italic; line-height: 1.5; }
+
+.tracker-section { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 14px; margin-top: 16px; }
+.tracker-title { font-size: 9px; letter-spacing: 2px; color: #C2185B; text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
+.tracker-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.tracker-row-label { font-size: 11px; color: #666; min-width: 90px; }
+.tracker-input {
+  flex: 1; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px;
+  color: #1a1a1a; font-size: 12px; padding: 7px 10px; font-family: Tahoma, sans-serif; transition: border-color 0.2s;
+}
+.tracker-input:focus { outline: none; border-color: #C2185B; background: #fff; }
+.tracker-input::placeholder { color: #bbb; }
+.status-select {
+  flex: 1; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px;
+  color: #1a1a1a; font-size: 12px; padding: 7px 10px; font-family: Tahoma, sans-serif; cursor: pointer;
+}
+.status-select:focus { outline: none; border-color: #C2185B; }
+.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+.metric-label { font-size: 9px; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
+.metric-input {
+  width: 100%; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px;
+  color: #1a1a1a; font-size: 13px; padding: 8px 10px; font-family: Tahoma, sans-serif;
+  transition: border-color 0.2s; text-align: right;
+}
+.metric-input:focus { outline: none; border-color: #C2185B; background: #fff; }
+.metric-input::placeholder { color: #bbb; }
+.save-btn {
+  width: 100%; margin-top: 12px; padding: 11px; border-radius: 8px; border: none;
+  font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer; font-family: Tahoma, sans-serif; font-weight: 700; transition: opacity 0.2s;
+}
+.saved-msg { text-align: center; font-size: 11px; color: #4caf50; margin-top: 8px; display: none; font-weight: 700; }
+.error-msg { text-align: center; font-size: 11px; color: #e53935; margin-top: 8px; display: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">✍️ 24 Artículos LinkedIn</div>
+  <h1>Tu plan editorial<br><em>completo con métricas</em></h1>
+  <p class="header-sub">Toca cada artículo para ver la estructura completa y registrar tu avance. Los datos se guardan en local y se sincronizan con Google Sheets.</p>
+</div>
+
+<div class="sheets-banner">
+  <div class="sheets-banner-icon">📊</div>
+  <div style="flex:1">
+    <strong>Conecta con Google Sheets</strong> — Pega aquí la URL de tu Web App (ver instrucciones abajo) y toca Guardar URL. Desde ese momento, cada vez que guardes un artículo los datos irán automáticamente a tu Sheets.
+    <div class="sheets-url-row">
+      <input type="text" class="sheets-url-input" id="sheetsUrlInput" placeholder="https://script.google.com/macros/s/TU_ID/exec"/>
+      <button class="sheets-save-btn" onclick="saveSheetUrl()">Guardar URL</button>
+    </div>
+  </div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-label">Tu avance por bloque</div>
+  <div class="progress-blocks" id="progressBlocks"></div>
+  <div class="total-bar-row">
+    <div class="total-bar"><div class="total-fill" id="totalFill" style="width:0%"></div></div>
+    <span class="total-label" id="totalLabel">0 / 24</span>
+  </div>
+</div>
+
+<div class="filter-row" id="filterRow"></div>
+<div id="articlesList"></div>
+
+<script>
+const BLOQUES = [
+  { id:"L", name:"Liderazgo",          emoji:"👑", color:"#C2185B" },
+  { id:"E", name:"Educación & Futuro", emoji:"🎓", color:"#1565C0" },
+  { id:"T", name:"Tecnología Aplicada",emoji:"💻", color:"#00695C" },
+  { id:"F", name:"Train the Trainers", emoji:"🧑‍🏫", color:"#6A1B9A" },
+  { id:"X", name:"Tema Libre",         emoji:"✨", color:"#E65100" },
+];
+
+const ARTICLES = [
+  // LIDERAZGO (5)
+  { id:"L1", bloque:"L", titulo:"Confiar en tu equipo no es un valor — es una decisión estratégica",
+    intro:"El artículo que abre tu voz sobre liderazgo real. No el de los libros, sino el que se ejerce cuando sueltas el control y confías en el criterio de las personas.",
+    estructura:[
+      {t:"El mito del control", d:"Por qué tantos líderes creen que supervisar más = mejores resultados. Dato: equipos con alta autonomía son 4x más productivos (Gallup)."},
+      {t:"Lo que aprendí soltando el control", d:"Tu experiencia personal: qué cambió cuando dejaste de estar encima de cada decisión."},
+      {t:"Confianza no es ingenuidad", d:"La distinción clave: cómo se construye confianza con claridad de propósito y acuerdos explícitos."},
+      {t:"3 preguntas para saber si realmente confías en tu equipo", d:"Cierre práctico y accionable."},
+    ],
+    datos:"Gallup sobre autonomía y productividad. Deloitte: liderazgo empoderador vs. controlador.",
+    cta:"¿Qué tan difícil te resultó — o te resulta — confiar en tu equipo cuando algo está en juego?" },
+
+  { id:"L2", bloque:"L", titulo:"El liderazgo que nadie te enseña: liderar desde la escucha real",
+    intro:"Hablas del liderazgo escuchador — no el que asiente mientras piensa en su respuesta, sino el que transforma conversaciones y equipos.",
+    estructura:[
+      {t:"La escucha como herramienta de poder", d:"Por qué los líderes que escuchan mejor toman decisiones más inteligentes."},
+      {t:"La diferencia entre oír y escuchar de verdad", d:"Los 3 niveles de escucha activa aplicados al liderazgo de equipos."},
+      {t:"Lo que pasa en un equipo cuando el líder no escucha", d:"Patrones concretos que has visto y acompañado."},
+      {t:"Cómo desarrollar la escucha como habilidad deliberada", d:"Prácticas concretas para el día a día."},
+    ],
+    datos:"Otto Scharmer y los niveles de escucha. Harvard Business Review sobre escucha activa en líderes.",
+    cta:"¿Cuándo fue la última vez que alguien de tu equipo sintió que realmente lo escuchaste — sin agenda, sin respuesta preparada?" },
+
+  { id:"L3", bloque:"L", titulo:"Las diferencias dentro del equipo no son el problema: son la señal",
+    intro:"Un artículo que da vuelta el relato común sobre el conflicto en los equipos. Las diferencias bien gestionadas no rompen — construyen.",
+    estructura:[
+      {t:"Por qué le tenemos miedo al desacuerdo", d:"La raíz psicológica del conflicto evitado en las organizaciones."},
+      {t:"Conflicto productivo vs. conflicto tóxico", d:"La distinción que más importa para cualquier líder."},
+      {t:"Lo que he visto cuando los equipos aprenden a disentir bien", d:"Ejemplos reales (sin nombres) de transformaciones que empezaron con una conversación difícil."},
+      {t:"Cómo crear el espacio para que el desacuerdo sea generativo", d:"3 condiciones concretas."},
+    ],
+    datos:"Amy Edmondson sobre seguridad psicológica. Patrick Lencioni sobre disfunciones del equipo.",
+    cta:"¿Tu equipo se siente seguro para decirte que estás equivocado/a? ¿Cómo lo sabes?" },
+
+  { id:"L4", bloque:"L", titulo:"Líderes que dejan huella: qué tienen en común los que recordamos",
+    intro:"Un artículo reflexivo sobre el legado del liderazgo. Qué hace que algunas personas marquen a quienes trabajan con ellas.",
+    estructura:[
+      {t:"La pregunta que todo líder debería hacerse una vez al año", d:"¿Qué van a recordar de ti las personas que trabajan contigo?"},
+      {t:"Lo que tienen en común los líderes que más nos marcaron", d:"Patrones consistentes: presencia, confianza, generosidad con el aprendizaje."},
+      {t:"La historia del líder que cambió cómo entiendo el liderazgo", d:"Tu historia personal: quien te dijo que podías disentir y traer ideas."},
+      {t:"Cómo construir ese legado intencionalmente", d:"No es suerte ni carisma: es una práctica deliberada."},
+    ],
+    datos:"Zenger & Folkman sobre líderes inspiradores. Estudios sobre mentoring y desarrollo de carrera.",
+    cta:"¿Quién fue el líder que más te marcó — y qué hizo exactamente que no olvidaste?" },
+
+  { id:"L5", bloque:"L", titulo:"El síndrome del líder ocupado: cuando la agenda mata el liderazgo",
+    intro:"Un artículo sobre una trampa muy común: líderes tan ocupados gestionando que dejan de liderar.",
+    estructura:[
+      {t:"El líder más ocupado que conocí", d:"Historia que ilustra la paradoja: máxima actividad, mínimo liderazgo real."},
+      {t:"La diferencia entre gestionar y liderar", d:"Qué se pierde cuando lo urgente consume todo el tiempo del líder."},
+      {t:"Lo que la evidencia dice sobre cómo usan el tiempo los líderes efectivos", d:"Datos sobre distribución del tiempo en líderes de alto impacto."},
+      {t:"Cómo recuperar el espacio para liderar de verdad", d:"3 cambios concretos en la agenda."},
+    ],
+    datos:"McKinsey sobre uso del tiempo en líderes. Peter Drucker sobre efectividad ejecutiva.",
+    cta:"¿Cuánto de tu semana pasas liderando — versus administrando, apagando incendios o en reuniones que otros podrían manejar?" },
+
+  // EDUCACIÓN & FUTURO (5)
+  { id:"E1", bloque:"E", titulo:"Formación que transforma vs. formación que certifica: ¿en cuál estamos invirtiendo?",
+    intro:"Tu pregunta más provocadora sobre educación corporativa: ¿realmente la formación que ofrecemos cambia a las personas — o solo les da un papel?",
+    estructura:[
+      {t:"El problema con cómo medimos el aprendizaje", d:"Por qué las horas de capacitación y los certificados son métricas vacías."},
+      {t:"Lo que he visto en personas que sí se transformaron", d:"Ejemplos reales de participantes cuyo antes y después fue notable."},
+      {t:"Las 4 condiciones para que la formación realmente funcione", d:"Marco práctico desde tu experiencia + ciencias del aprendizaje."},
+      {t:"La pregunta que toda organización debería hacerse antes de contratar una capacitación", d:"Cierre accionable."},
+    ],
+    datos:"Modelo de Kirkpatrick. ATD sobre retorno de inversión en formación corporativa.",
+    cta:"¿La última formación que hizo tu equipo cambió algo real en cómo trabajan — o quedó en el papel del certificado?" },
+
+  { id:"E2", bloque:"E", titulo:"Lo que la neurociencia dice sobre cómo aprenden los adultos — y por qué lo ignoramos",
+    intro:"Artículo con base científica pero lenguaje accesible. Llevas años diseñando formación para adultos: aquí compartes lo que funciona de verdad.",
+    estructura:[
+      {t:"El mito del adulto que ya no puede aprender", d:"Qué dice la neurociencia sobre plasticidad cerebral y aprendizaje adulto."},
+      {t:"3 principios que hacen la diferencia en formación de adultos", d:"Emoción, aplicación inmediata y aprendizaje espaciado — con evidencia."},
+      {t:"Por qué la mayoría de las capacitaciones corporativas ignoran esto", d:"El modelo de taller de un día y sus limitaciones reales."},
+      {t:"Cómo diseñar experiencias de aprendizaje que sí quedan", d:"Principios prácticos para responsables de formación y líderes."},
+    ],
+    datos:"Ebbinghaus sobre la curva del olvido. Estudios sobre aprendizaje espaciado. David Kolb y el aprendizaje experiencial.",
+    cta:"¿Cuándo fue la última vez que aprendiste algo en una capacitación que todavía aplicas hoy?" },
+
+  { id:"E3", bloque:"E", titulo:"¿Estamos formando personas para el mundo que viene — o para el que ya pasó?",
+    intro:"Artículo provocador sobre el desfase entre lo que enseñamos y lo que el mundo laboral realmente necesita.",
+    estructura:[
+      {t:"El currículum que no cambia aunque el mundo sí", d:"Por qué los programas de formación tardan años en actualizarse."},
+      {t:"Las habilidades que más se demandan hoy — y que nadie enseña bien", d:"Criterio, adaptabilidad, pensamiento crítico, colaboración en entornos inciertos."},
+      {t:"Lo que he visto funcionar en organizaciones que sí se adelantan", d:"Ejemplos concretos de enfoques formativos que preparan para lo que viene."},
+      {t:"El rol del líder en la formación continua de su equipo", d:"No es solo responsabilidad de RRHH: es liderazgo."},
+    ],
+    datos:"WEF Future of Jobs Report sobre habilidades del futuro. LinkedIn Learning sobre tendencias en formación.",
+    cta:"¿Tu organización está formando a las personas para el trabajo de hoy — o para el de hace 5 años?" },
+
+  { id:"E4", bloque:"E", titulo:"El aprendizaje continuo en tiempos de colapso de atención: ¿es posible?",
+    intro:"La paradoja de nuestra época: nunca tuvimos más acceso a aprendizaje — y nunca aprendimos menos en profundidad.",
+    estructura:[
+      {t:"El acceso infinito que nos hace aprender menos", d:"La paradoja del contenido abundante y el aprendizaje superficial."},
+      {t:"Qué hace que algo realmente se aprenda y se quede", d:"Condiciones para el aprendizaje profundo en contextos de alta demanda."},
+      {t:"Lo que funciona en la práctica para líderes con poco tiempo", d:"Tu experiencia acompañando a personas que sí sostienen el aprendizaje."},
+      {t:"Un sistema simple para aprender algo real cada mes", d:"Propuesta práctica y replicable."},
+    ],
+    datos:"Herbert Simon sobre economía de la atención. Investigación sobre multitasking y aprendizaje.",
+    cta:"¿Qué estás aprendiendo este mes — y cómo te estás asegurando de que quede?" },
+
+  { id:"E5", bloque:"E", titulo:"Por qué el liderazgo es también una práctica de aprendizaje permanente",
+    intro:"Un artículo que conecta tus dos mundos: liderazgo y educación. Los mejores líderes que has conocido tienen algo en común — siguen aprendiendo con la misma intensidad que cuando empezaron.",
+    estructura:[
+      {t:"La trampa del experto que deja de preguntar", d:"Por qué la experiencia puede convertirse en el mayor obstáculo al aprendizaje."},
+      {t:"Lo que distingue a los líderes que siguen creciendo", d:"Mindset, hábitos y contextos que sostienen el aprendizaje en el tiempo."},
+      {t:"Mi propia práctica de aprendizaje como líder", d:"Qué haces tú para seguir aprendiendo — con honestidad sobre lo que te cuesta."},
+      {t:"Cómo crear una cultura de aprendizaje desde el liderazgo", d:"No es un programa: es un modelado constante."},
+    ],
+    datos:"Carol Dweck sobre growth mindset. Investigación sobre líderes aprendices (learner leaders).",
+    cta:"¿Qué es lo último que aprendiste que cambió genuinamente cómo lideras?" },
+
+  // TECNOLOGÍA APLICADA (5)
+  { id:"T1", bloque:"T", titulo:"IA en los equipos de trabajo: lo que cambia, lo que no, y lo que depende de nosotros",
+    intro:"Tu entrada al tema de tecnología: equilibrada, sin catastrofismo ni ingenuidad. La mirada de alguien que trabaja en la intersección de personas y tecnología.",
+    estructura:[
+      {t:"Lo que la IA ya está cambiando en los equipos hoy", d:"Ejemplos concretos de cómo afecta roles, procesos y decisiones."},
+      {t:"Lo que no puede reemplazar — y por qué importa", d:"Criterio, empatía, juicio ético, liderazgo relacional."},
+      {t:"El nuevo trabajo del líder en equipos con IA", d:"Cómo cambia el rol de quien lidera cuando parte del equipo trabaja con inteligencia artificial."},
+      {t:"Las preguntas que toda organización debería estar respondiendo hoy", d:"Cierre propositivo para directivos y equipos de RRHH."},
+    ],
+    datos:"McKinsey sobre automatización del trabajo. WEF Future of Jobs. Datos de adopción de IA en Latinoamérica.",
+    cta:"¿Tu organización ya está conversando sobre cómo integrar la IA con criterio — o todavía espera para ver qué pasa?" },
+
+  { id:"T2", bloque:"T", titulo:"Transformación digital: por qué fracasa en las personas antes de fallar en la tecnología",
+    intro:"Artículo con postura clara. La transformación digital no es un problema técnico — es un problema de liderazgo y cultura.",
+    estructura:[
+      {t:"El error más común: comprar tecnología sin cambiar cultura", d:"Por qué las organizaciones invierten en herramientas y olvidan invertir en las personas."},
+      {t:"Lo que hace que un equipo adopte o rechace el cambio tecnológico", d:"Psicología del cambio: miedo, identidad, autonomía."},
+      {t:"El rol del líder en una transformación digital real", d:"No es saber de tecnología — es saber gestionar incertidumbre."},
+      {t:"3 señales de que tu transformación digital va por mal camino", d:"Cierre práctico y diagnóstico."},
+    ],
+    datos:"McKinsey: 70% de las transformaciones digitales falla. Modelo ADKAR de gestión del cambio.",
+    cta:"¿Has vivido una transformación digital en tu organización? ¿Qué fue lo más difícil — la tecnología o las personas?" },
+
+  { id:"T3", bloque:"T", titulo:"Habilidades digitales en 2025: cuáles necesitas y cuáles ya no importan tanto",
+    intro:"Un artículo práctico y directo. Qué habilidades digitales son realmente críticas hoy para líderes y equipos.",
+    estructura:[
+      {t:"El mapa de habilidades digitales que más se necesitan hoy", d:"Desde la alfabetización en IA hasta el pensamiento de datos y la ciberseguridad básica."},
+      {t:"Lo que he visto en organizaciones que sí desarrollan capacidades digitales reales", d:"Qué hacen diferente — no en tecnología, sino en cultura de aprendizaje."},
+      {t:"Por qué la habilidad digital más importante no es técnica", d:"El criterio para usar bien la tecnología supera al conocimiento de la herramienta."},
+      {t:"Cómo hacer un diagnóstico rápido de tu equipo", d:"3 preguntas para identificar brechas digitales que realmente importan."},
+    ],
+    datos:"LinkedIn Learning sobre habilidades más demandadas. Google sobre competencias digitales. OCDE sobre brecha digital.",
+    cta:"¿Cuál es la habilidad digital que más le falta a tu equipo — y qué están haciendo para desarrollarla?" },
+
+  { id:"T4", bloque:"T", titulo:"Tecnología y brecha: el riesgo de que la IA amplíe las desigualdades que ya existen",
+    intro:"Tu artículo más reflexivo y crítico sobre tecnología. No desde el miedo, sino desde la responsabilidad de quienes trabajamos en desarrollo de personas.",
+    estructura:[
+      {t:"El optimismo tecnológico que ignora el contexto", d:"Por qué las narrativas sobre IA omiten sistemáticamente el impacto distributivo."},
+      {t:"Lo que los datos dicen sobre tecnología y desigualdad en Latinoamérica", d:"Brecha digital, acceso, género y educación — con cifras reales."},
+      {t:"El rol de las organizaciones en una adopción tecnológica responsable", d:"Más allá del cumplimiento: qué significa usar tecnología con conciencia."},
+      {t:"Lo que podemos hacer desde donde estamos", d:"Propuesta concreta para líderes, formadores y equipos de RRHH."},
+    ],
+    datos:"CEPAL sobre brecha digital en América Latina. UNESCO sobre IA y equidad educativa. OIT sobre impacto de automatización.",
+    cta:"¿Tu organización está pensando en el impacto de la tecnología en la equidad — o solo en la eficiencia?" },
+
+  { id:"T5", bloque:"T", titulo:"Lego Serious Play y tecnología: cuando lo análogo potencia lo digital",
+    intro:"Un artículo que conecta tu metodología más diferenciadora con el contexto tecnológico. Por qué en un mundo cada vez más digital, las metodologías físicas son más necesarias que nunca.",
+    estructura:[
+      {t:"La paradoja: más tecnología, más necesidad de lo presencial", d:"Qué pierden los equipos cuando todo se vuelve virtual y cómo recuperarlo."},
+      {t:"Qué es Lego Serious Play y por qué funciona", d:"La metodología desde adentro: qué pasa en el cerebro cuando construimos con las manos."},
+      {t:"Lo que he visto en equipos que trabajan con LSP", d:"Transformaciones concretas — conversaciones que no habían podido tener de otra forma."},
+      {t:"Cuándo usar metodologías analógicas en un mundo digital", d:"No es nostalgia: es estrategia de aprendizaje."},
+    ],
+    datos:"Investigación sobre pensamiento constructivo (Papert). Estudios sobre aprendizaje kinestésico en adultos. Evidencia sobre facilitación con LSP.",
+    cta:"¿Has usado alguna metodología no digital para resolver un problema de equipo? ¿Qué pasó?" },
+
+  // TRAIN THE TRAINERS (5)
+  { id:"F1", bloque:"F", titulo:"Enseñar a otros es la forma más profunda de aprender: lo que descubrí siendo formadora",
+    intro:"El artículo que abre este bloque desde tu experiencia más personal. Llevas años formando a personas que van a formar a otras — y eso cambia todo.",
+    estructura:[
+      {t:"El momento en que pasé de aprender a enseñar", d:"Tu historia: qué cambia cuando el objetivo ya no es saber tú, sino lograr que otros sepan."},
+      {t:"Por qué enseñar te obliga a entender de verdad", d:"La ciencia detrás del 'efecto protégé': enseñar consolida y profundiza el propio aprendizaje."},
+      {t:"Lo que distingue a un buen formador de alguien que solo sabe mucho", d:"Conocimiento experto ≠ capacidad de transferir ese conocimiento."},
+      {t:"Cómo empezar a desarrollar la capacidad de formar a otros", d:"Primer paso concreto para alguien que quiere convertirse en formador."},
+    ],
+    datos:"Efecto protégé (Carey, 2014). Investigación sobre aprendizaje por enseñanza. Modelo de Feuerstein sobre mediación del aprendizaje.",
+    cta:"¿Has tenido que enseñar algo que creías saber — y en el proceso te diste cuenta de que no lo sabías tan bien? ¿Qué pasó?" },
+
+  { id:"F2", bloque:"F", titulo:"Train the Trainers: qué significa realmente formar a quienes van a formar",
+    intro:"Un artículo que explica el concepto desde adentro — no como un taller, sino como una filosofía de multiplicación del conocimiento en las organizaciones.",
+    estructura:[
+      {t:"El modelo que más escala en formación organizacional", d:"Por qué Train the Trainers es la apuesta más eficiente para organizaciones que quieren impacto real."},
+      {t:"Lo que se pierde cuando el modelo se reduce a 'ahora tú enseña lo que yo te enseñé'", d:"La trampa de la réplica sin comprensión profunda."},
+      {t:"Las 3 competencias que todo formador interno necesita desarrollar", d:"Más allá del contenido: facilitación, lectura del grupo, adaptación en tiempo real."},
+      {t:"Cómo evaluar si tu programa Train the Trainers está funcionando", d:"Indicadores concretos de transferencia real."},
+    ],
+    datos:"Modelo de multiplicación del aprendizaje (ATD). Investigación sobre formadores internos vs. externos en organizaciones.",
+    cta:"¿Tu organización tiene formadores internos? ¿Cómo los prepara — o simplemente los nombra y espera que funcionen?" },
+
+  { id:"F3", bloque:"F", titulo:"El formador que transforma vs. el que solo transmite: ¿cuál eres tú?",
+    intro:"Un artículo provocador para personas que se dedican a formar a otras. La distinción entre transmisión y transformación es la más importante del oficio.",
+    estructura:[
+      {t:"La trampa del formador que sabe mucho pero conecta poco", d:"Por qué el dominio del contenido no garantiza el aprendizaje en otros."},
+      {t:"Lo que hace que una persona recuerde lo que aprendió contigo", d:"Emoción, relevancia, aplicación inmediata y relación — los 4 factores."},
+      {t:"Lo que he visto en formadores que realmente transforman", d:"Patrones concretos observados en años de trabajo con educadores y facilitadores."},
+      {t:"Cómo pasar de transmitir a transformar", d:"Un cambio de mentalidad antes que de técnica."},
+    ],
+    datos:"Malcolm Knowles y la andragogía. Investigación sobre facilitación efectiva en adultos. Modelo de aprendizaje transformacional (Mezirow).",
+    cta:"¿Cuándo fue la última vez que alguien que formaste te dijo que algo que aprendió contigo cambió algo real en su trabajo?" },
+
+  { id:"F4", bloque:"F", titulo:"Cómo diseñar experiencias de aprendizaje que otros puedan replicar — y que sigan funcionando",
+    intro:"El artículo más técnico del bloque, pero escrito desde tu experiencia práctica en diseño instruccional. Para formadores, RRHH y líderes que quieren multiplicar el conocimiento.",
+    estructura:[
+      {t:"El error más común en el diseño de formación replicable", d:"Crear materiales para el formador, no para el aprendiz."},
+      {t:"Los elementos que hacen que una experiencia de aprendizaje se pueda transferir", d:"Claridad de propósito, estructura flexible, ejemplos adaptables, guías de facilitación reales."},
+      {t:"Lo que he aprendido diseñando formación que otros van a impartir", d:"Tu experiencia concreta en diseño instruccional para contextos de replicación."},
+      {t:"Un checklist para saber si tu diseño formativo está listo para ser replicado", d:"Cierre práctico y accionable."},
+    ],
+    datos:"ADDIE y otros modelos de diseño instruccional. Investigación sobre fidelidad de implementación en programas formativos.",
+    cta:"¿Has diseñado formación que otros tuvieron que impartir — y viste cómo la adaptaron (o la destruyeron)? ¿Qué aprendiste de eso?" },
+
+  { id:"F5", bloque:"F", titulo:"El rol del formador en un mundo donde la información ya no escasea",
+    intro:"Un artículo de posicionamiento. Si cualquiera puede buscar cualquier cosa en Google o preguntarle a una IA, ¿para qué existe el formador? Tu respuesta desde la experiencia.",
+    estructura:[
+      {t:"La pregunta incómoda que todo formador debería hacerse", d:"¿Qué ofrezco yo que no puede ofrecer un video de YouTube o ChatGPT?"},
+      {t:"Lo que la información no puede hacer que un formador sí puede", d:"Contexto, relación, adaptación en tiempo real, sostenimiento del proceso."},
+      {t:"El nuevo rol del formador en la era de la IA", d:"De transmisor de contenido a arquitecto de experiencias de aprendizaje."},
+      {t:"Por qué el futuro del aprendizaje es más humano, no menos", d:"Tu argumento más poderoso sobre el valor de la formación con personas."},
+    ],
+    datos:"Investigación sobre aprendizaje social (Vygotsky). Datos sobre limitaciones del e-learning sin acompañamiento. WEF sobre habilidades humanas irreemplazables.",
+    cta:"¿Qué crees que hace insustituible a un buen formador — en un mundo donde la información sobra y la atención escasea?" },
+
+  // TEMA LIBRE (4)
+  { id:"X1", bloque:"X", titulo:"Lo que nadie te dice sobre querer ser mejor líder cada día",
+    intro:"Un artículo íntimo y honesto sobre la búsqueda continua de mejora — no desde la perfección, sino desde la honestidad de que siempre hay algo más que aprender.",
+    estructura:[
+      {t:"La trampa del líder que ya llegó", d:"Por qué creer que 'ya sé liderar' es el inicio del estancamiento."},
+      {t:"Lo que me marcó de un líder que admiré profundamente", d:"La historia de quien te dijo que podías disentir y traer ideas — y cómo eso definió tu estilo."},
+      {t:"Mejor persona, mejor líder: ¿son lo mismo?", d:"Tu reflexión personal sobre la conexión entre crecimiento humano y liderazgo."},
+      {t:"Lo que practico hoy para seguir aprendiendo", d:"3 hábitos concretos que sostienes."},
+    ],
+    datos:"Carol Dweck y el growth mindset aplicado al liderazgo adulto.",
+    cta:"¿Qué estás haciendo hoy para ser mejor líder que ayer? Cuéntame — aprendo de todos." },
+
+  { id:"X2", bloque:"X", titulo:"El síndrome del impostor no desaparece con más experiencia — aprendemos a liderar con él",
+    intro:"Artículo íntimo y valiente. Algo que muchos líderes sienten pero pocos nombran en voz alta — especialmente en LinkedIn.",
+    estructura:[
+      {t:"La voz que dice 'quién soy yo para estar acá'", d:"Descripción honesta de cómo se siente el síndrome del impostor en posiciones de liderazgo."},
+      {t:"Por qué no desaparece con los logros", d:"El 70% de las personas exitosas lo experimenta. Por qué más éxito no lo silencia."},
+      {t:"Lo que aprendí a hacer con esa voz", d:"Tu estrategia personal: no suprimirla, sino ponerla en perspectiva."},
+      {t:"Lo que le diría hoy a la Liss de hace 10 años", d:"Cierre emocional y poderoso."},
+    ],
+    datos:"Investigación de Pauline Clance y Suzanne Imes sobre el síndrome del impostor. Estudios sobre su prevalencia en mujeres líderes.",
+    cta:"¿Lo has sentido? ¿Cómo lo manejas? Creo que hablar de esto nos hace mejores líderes." },
+
+  { id:"X3", bloque:"X", titulo:"Lo que aprendí trabajando con organizaciones que quieren cambiar el mundo",
+    intro:"Personal y narrativo. Tu experiencia con organizaciones de impacto social — lo que te marcó, lo que te sorprendió, lo que te cambió como profesional.",
+    estructura:[
+      {t:"Por qué el propósito no alcanza si no hay gestión", d:"La tensión entre misión poderosa y los desafíos reales de operar una organización."},
+      {t:"Lo que estas organizaciones hacen mejor que las empresas tradicionales", d:"Colaboración, sentido, resiliencia — con ejemplos reales."},
+      {t:"Lo que las empresas podrían aprender de ellas", d:"El valor del propósito genuino en cualquier tipo de organización."},
+      {t:"Por qué sigo eligiendo trabajar en este espacio", d:"Cierre personal y honesto sobre tu motivación."},
+    ],
+    datos:"Datos sobre impacto del propósito en retención de talento (Deloitte, PwC). Cifras sobre el sector sin fines de lucro en Chile.",
+    cta:"¿Has trabajado o colaborado con alguna organización de impacto? ¿Qué te llevaste de esa experiencia?" },
+
+  { id:"X4", bloque:"X", titulo:"Lo que este año me enseñó sobre liderar, aprender y seguir eligiendo mejorar",
+    intro:"Cierre de año. No un resumen de logros — una mirada genuina a lo que el año dejó en ti como profesional y persona.",
+    estructura:[
+      {t:"Lo que esperaba de este año — y lo que fue", d:"Honestidad sobre la distancia entre lo planeado y lo vivido."},
+      {t:"El aprendizaje que más me costó", d:"Algo real, no perfectamente resuelto — que humaniza y conecta."},
+      {t:"Lo que agradezco de las personas que estuvieron", d:"Reconocimiento a equipos, colaboradores, personas que aportaron."},
+      {t:"Lo que me llevo para el año que viene", d:"No metas — compromisos. Una o dos cosas concretas."},
+    ],
+    datos:"Puedes anclar en algún libro, estudio o aprendizaje concreto que hayas tenido durante el año.",
+    cta:"¿Qué aprendiste este año que no cambiarías por nada — aunque haya dolido llegar ahí?" },
+];
+
+const STATUSES = [
+  { val:"pendiente",   label:"⬜ Pendiente",   color:"#999" },
+  { val:"en_progreso", label:"🔵 En progreso", color:"#1565C0" },
+  { val:"publicado",   label:"✅ Publicado",   color:"#4caf50" },
+];
+
+let state    = JSON.parse(localStorage.getItem('liss_art_v3') || '{}');
+let sheetsUrl = localStorage.getItem('liss_sheets_url') || '';
+let filterActive = 'ALL';
+
+function saveState() { localStorage.setItem('liss_art_v3', JSON.stringify(state)); }
+function getS(id)    { return state[id] || {status:'pendiente',fecha:'',notas:'',impresiones:'',likes:'',comentarios:'',compartidos:'',leads:''}; }
+function getColor(b) { return BLOQUES.find(x=>x.id===b)?.color || '#C2185B'; }
+function getEmoji(b) { return BLOQUES.find(x=>x.id===b)?.emoji || ''; }
+function getName(b)  { return BLOQUES.find(x=>x.id===b)?.name  || ''; }
+
+// SHEETS URL
+document.getElementById('sheetsUrlInput').value = sheetsUrl;
+function saveSheetUrl() {
+  sheetsUrl = document.getElementById('sheetsUrlInput').value.trim();
+  localStorage.setItem('liss_sheets_url', sheetsUrl);
+  alert(sheetsUrl ? '✅ URL guardada correctamente.' : 'URL borrada.');
+}
+
+async function sendToSheets(id, s) {
+  if (!sheetsUrl) return;
+  const a = ARTICLES.find(x=>x.id===id);
+  const payload = {
+    id, titulo: a.titulo, bloque: getName(a.bloque),
+    status: s.status, fecha: s.fecha, notas: s.notas,
+    impresiones: s.impresiones, likes: s.likes,
+    comentarios: s.comentarios, compartidos: s.compartidos, leads: s.leads,
+    timestamp: new Date().toISOString()
+  };
+  try {
+    await fetch(sheetsUrl, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    return true;
+  } catch(e) { return false; }
+}
+
+// PROGRESS
+function updateProgress() {
+  const pb = document.getElementById('progressBlocks');
+  pb.innerHTML = '';
+  BLOQUES.forEach(bl => {
+    const arts = ARTICLES.filter(a=>a.bloque===bl.id);
+    const done = arts.filter(a=>(state[a.id]?.status||'pendiente')==='publicado').length;
+    const pct  = arts.length ? Math.round(done/arts.length*100) : 0;
+    pb.innerHTML += `<div class="prog-block">
+      <div class="prog-block-name" style="color:${bl.color}">${bl.emoji} ${bl.name}</div>
+      <div class="prog-block-bar"><div class="prog-block-fill" style="width:${pct}%;background:${bl.color}"></div></div>
+      <div class="prog-block-count">${done}/${arts.length} publicados</div>
+    </div>`;
+  });
+  const total = ARTICLES.filter(a=>(state[a.id]?.status||'pendiente')==='publicado').length;
+  const pct   = Math.round(total/ARTICLES.length*100);
+  document.getElementById('totalFill').style.width = pct+'%';
+  document.getElementById('totalLabel').textContent = `${total} / ${ARTICLES.length} publicados`;
+}
+
+// FILTERS
+function buildFilters() {
+  const row = document.getElementById('filterRow');
+  row.innerHTML = '';
+  const all = document.createElement('button');
+  all.className = 'filter-btn';
+  all.textContent = 'Todos';
+  all.onclick = ()=>setFilter('ALL');
+  row.appendChild(all);
+  BLOQUES.forEach(bl=>{
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.id = 'fbtn-'+bl.id;
+    btn.textContent = bl.emoji+' '+bl.name;
+    btn.onclick = ()=>setFilter(bl.id);
+    row.appendChild(btn);
+  });
+}
+function setFilter(f) {
+  filterActive = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.style.background='#f5f5f5'; b.style.color='#999'; b.style.borderColor='#ddd';
+  });
+  const col = f==='ALL' ? '#C2185B' : getColor(f);
+  const activeBtn = f==='ALL' ? document.querySelector('.filter-btn') : document.getElementById('fbtn-'+f);
+  if(activeBtn){ activeBtn.style.background=col+'22'; activeBtn.style.color=col; activeBtn.style.borderColor=col; }
+  renderArticles();
+}
+
+// TOGGLE
+function toggleCard(id) {
+  document.getElementById('body-'+id).classList.toggle('visible');
+  document.getElementById('chev-'+id).classList.toggle('open');
+}
+
+// SAVE TRACKER
+async function saveTracker(id) {
+  const s = getS(id);
+  s.status       = document.getElementById('st-'+id).value;
+  s.fecha        = document.getElementById('fe-'+id).value;
+  s.notas        = document.getElementById('no-'+id).value;
+  s.impresiones  = document.getElementById('im-'+id).value;
+  s.likes        = document.getElementById('li-'+id).value;
+  s.comentarios  = document.getElementById('co-'+id).value;
+  s.compartidos  = document.getElementById('cp-'+id).value;
+  s.leads        = document.getElementById('le-'+id).value;
+  state[id] = s;
+  saveState();
+  updateProgress();
+  updateCardBadge(id);
+
+  const savedMsg = document.getElementById('saved-'+id);
+  const errorMsg = document.getElementById('error-'+id);
+  savedMsg.style.display='none'; errorMsg.style.display='none';
+
+  if(sheetsUrl) {
+    const ok = await sendToSheets(id, s);
+    if(ok) {
+      savedMsg.textContent = '✓ Guardado y enviado a Google Sheets';
+      savedMsg.style.display='block';
+    } else {
+      savedMsg.textContent = '✓ Guardado localmente';
+      savedMsg.style.display='block';
+      errorMsg.textContent = '⚠ No se pudo sincronizar con Sheets. Verifica la URL.';
+      errorMsg.style.display='block';
+    }
+  } else {
+    savedMsg.textContent = '✓ Guardado localmente';
+    savedMsg.style.display='block';
+  }
+  setTimeout(()=>{ savedMsg.style.display='none'; errorMsg.style.display='none'; }, 3000);
+}
+
+function updateCardBadge(id) {
+  const s  = getS(id);
+  const st = STATUSES.find(x=>x.val===s.status)||STATUSES[0];
+  const dot  = document.getElementById('dot-'+id);
+  const stxt = document.getElementById('stxt-'+id);
+  if(dot)  dot.style.background = st.color;
+  if(stxt){ stxt.textContent = st.label.replace(/^.+\s/,'')+( s.fecha ? ' · '+s.fecha : ''); stxt.style.color=st.color; }
+}
+
+// RENDER
+function renderArticles() {
+  const list = document.getElementById('articlesList');
+  list.innerHTML = '';
+  const arts = filterActive==='ALL' ? ARTICLES : ARTICLES.filter(a=>a.bloque===filterActive);
+  arts.forEach((a,idx)=>{
+    const color = getColor(a.bloque);
+    const s  = getS(a.id);
+    const st = STATUSES.find(x=>x.val===s.status)||STATUSES[0];
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    card.innerHTML = `
+      <div class="card-header" onclick="toggleCard('${a.id}')">
+        <div class="card-num" style="background:${color}22;color:${color};border:1px solid ${color}44">${String(idx+1).padStart(2,'0')}</div>
+        <div class="card-meta">
+          <div class="card-bloque" style="color:${color}">${getEmoji(a.bloque)} ${getName(a.bloque)}</div>
+          <div class="card-title">${a.titulo}</div>
+          <div class="card-status">
+            <div class="status-dot" id="dot-${a.id}" style="background:${st.color}"></div>
+            <span id="stxt-${a.id}" style="color:${st.color}">${st.label.replace(/^.+\s/,'')}${s.fecha?' · '+s.fecha:''}</span>
+          </div>
+        </div>
+        <div class="chevron" id="chev-${a.id}">▼</div>
+      </div>
+      <div class="card-body" id="body-${a.id}">
+        <div class="sec-label">De qué va este artículo</div>
+        <div class="intro-box" style="color:${color};background:${color}11;border-left-color:${color}">${a.intro}</div>
+        <div class="sec-label">Estructura sugerida</div>
+        <div>${a.estructura.map((e,i)=>`
+          <div class="struct-item">
+            <div class="struct-num" style="color:${color}">${i+1}.</div>
+            <div class="struct-text"><strong>${e.t}</strong>${e.d}</div>
+          </div>`).join('')}
+        </div>
+        <div class="sec-label">Datos y referencias</div>
+        <div class="data-box">${a.datos}</div>
+        <div class="sec-label">Pregunta final (CTA)</div>
+        <div class="cta-box">${a.cta}</div>
+        <div class="tracker-section">
+          <div class="tracker-title">📊 Tu seguimiento</div>
+          <div class="tracker-row">
+            <div class="tracker-row-label">Estado</div>
+            <select class="status-select" id="st-${a.id}">
+              ${STATUSES.map(st=>`<option value="${st.val}"${s.status===st.val?' selected':''}>${st.label}</option>`).join('')}
+            </select>
+          </div>
+          <div class="tracker-row">
+            <div class="tracker-row-label">Fecha publicación</div>
+            <input type="date" class="tracker-input" id="fe-${a.id}" value="${s.fecha||''}"/>
+          </div>
+          <div class="tracker-row">
+            <div class="tracker-row-label">Notas</div>
+            <input type="text" class="tracker-input" id="no-${a.id}" value="${s.notas||''}" placeholder="Reflexión, aprendizaje..."/>
+          </div>
+          <div class="sec-label" style="margin-top:14px">Métricas (2 semanas después)</div>
+          <div class="metrics-grid">
+            <div class="metric-item"><div class="metric-label">👁 Impresiones</div><input type="number" class="metric-input" id="im-${a.id}" value="${s.impresiones||''}" placeholder="0"/></div>
+            <div class="metric-item"><div class="metric-label">❤️ Likes</div><input type="number" class="metric-input" id="li-${a.id}" value="${s.likes||''}" placeholder="0"/></div>
+            <div class="metric-item"><div class="metric-label">💬 Comentarios</div><input type="number" class="metric-input" id="co-${a.id}" value="${s.comentarios||''}" placeholder="0"/></div>
+            <div class="metric-item"><div class="metric-label">🔁 Compartidos</div><input type="number" class="metric-input" id="cp-${a.id}" value="${s.compartidos||''}" placeholder="0"/></div>
+            <div class="metric-item" style="grid-column:1/-1"><div class="metric-label">🎯 Leads / contactos</div><input type="number" class="metric-input" style="text-align:left" id="le-${a.id}" value="${s.leads||''}" placeholder="0"/></div>
+          </div>
+          <button class="save-btn" style="background:${color};color:#fff" onclick="saveTracker('${a.id}')">Guardar avance</button>
+          <div class="saved-msg" id="saved-${a.id}"></div>
+          <div class="error-msg" id="error-${a.id}"></div>
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+buildFilters();
+setFilter('ALL');
+updateProgress();
+</script>
+</body>
+</html>
