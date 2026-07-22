@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -150,6 +151,14 @@
   .mod h3{font-size:1.35rem;color:var(--ink);margin-bottom:6px}
   .mod .wk{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--violet)}
   .mod p{color:var(--ink-soft);font-size:1.02rem;margin-top:4px}
+  .mod-list{margin:12px 0 0;padding:0;list-style:none}
+  .mod-list li{position:relative;padding-left:22px;margin:7px 0;color:var(--ink-soft);font-size:.98rem}
+  .mod-list li::before{content:"✦";position:absolute;left:0;color:var(--violet)}
+  .mod-take{margin-top:13px;font-style:italic;color:var(--violet);font-size:1rem}
+  .diploma{width:120px;height:120px;margin:0 auto 24px;border-radius:22px;
+    background:linear-gradient(180deg,var(--spark),var(--ember));
+    display:flex;align-items:center;justify-content:center;font-size:3rem;
+    box-shadow:0 14px 34px rgba(255,158,44,.4);border:4px solid #fff}
   .mod-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
   .mod-list li{position:relative;padding-left:22px;color:var(--ink-soft);font-size:.98rem;line-height:1.45}
   .mod-list li::before{content:"◆";position:absolute;left:0;top:.35em;color:var(--spark);font-size:.62rem}
@@ -396,10 +405,8 @@
 <!-- CERTIFICACIÓN + DATOS -->
 <section class="cert pad">
   <div class="wrap">
-    <div class="badge">
-      <span class="fl">📜</span>
-    </div>
-    <span class="eyebrow dark">Al aprobar</span>
+    <div class="diploma">📜</div>
+    <span class="eyebrow dark">Al completar el programa</span>
     <h2 class="section-title" style="margin-bottom:16px">Un diploma que acredita lo que sabes hacer</h2>
     <p>Recibes un diploma que indica las competencias que lograste durante el programa, junto con un portafolio que las demuestra con evidencia real: tu sesión diseñada, tu facilitación grabada y tu reflexión de cierre.</p>
     <div class="facts">
